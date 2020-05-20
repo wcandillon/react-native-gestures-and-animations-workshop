@@ -1,7 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
-import { LinearGradient } from "expo-linear-gradient";
 
 import { mix } from "react-native-redash";
 import StyleGuide from "./StyleGuide";
@@ -38,16 +37,9 @@ interface ThumbnailProps {
   source: number;
   onPress: () => void;
   resizeMode?: "cover" | "contain";
-  dark?: boolean;
 }
 
-const Thumbnail = ({
-  title,
-  source,
-  onPress,
-  dark,
-  resizeMode,
-}: ThumbnailProps) => {
+const Thumbnail = ({ title, source, onPress, resizeMode }: ThumbnailProps) => {
   const value = new Value(0);
   const scale = mix(value, 1, 1.5);
   return (
@@ -64,9 +56,7 @@ const Thumbnail = ({
           {...{ source }}
         />
         <View style={styles.content}>
-          <Text type="title2" style={{ color: dark ? "white" : "#2F2E41" }}>
-            {title}
-          </Text>
+          <Text type="title2">{title}</Text>
         </View>
       </View>
     </TapHandler>
