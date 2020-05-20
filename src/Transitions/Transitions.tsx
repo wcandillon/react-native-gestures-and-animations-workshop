@@ -1,11 +1,8 @@
-import React from 'react';
-import { View } from 'react-native';
-
+import React from "react";
+import { View } from "react-native";
 
 const Transitions = () => {
-  return (
-    <View />
-  );
-}
+  return <View />;
+};
 
 export default Transitions;

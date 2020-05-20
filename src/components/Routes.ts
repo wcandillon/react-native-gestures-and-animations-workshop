@@ -3,5 +3,5 @@ export type Routes = {
   Transitions: undefined;
   Animations: undefined;
   Gestures: undefined;
-  CircularSLider: undefined;
+  SVGAnimations: undefined;
 };
