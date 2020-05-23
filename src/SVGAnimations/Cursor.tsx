@@ -1,49 +1,50 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import Animated from "react-native-reanimated";
-import { PanGestureHandler, State } from "react-native-gesture-handler";
-import { canvas2Polar, polar2Canvas, withOffset } from "react-native-redash";
-
-const { Value, block, event, set, useCode } = Animated;
+import Animated, {
+  add,
+  cond,
+  lessThan,
+  proc,
+  set,
+  useCode,
+} from "react-native-reanimated";
+import { PanGestureHandler } from "react-native-gesture-handler";
+import {
+  canvas2Polar,
+  polar2Canvas,
+  usePanGestureHandler,
+  withOffset,
+} from "react-native-redash";
 
 interface CursorProps {
   r: number;
   theta: Animated.Value<number>;
   strokeWidth: number;
-  backgroundColor: Animated.Node<number>;
+  backgroundColor: string;
 }
+
+const normalizeTheta = proc((theta: Animated.Node<number>) =>
+  cond(lessThan(theta, 0), add(Math.PI * 2, theta), theta)
+);
 
 const Cursor = ({ r, theta, strokeWidth, backgroundColor }: CursorProps) => {
   const center = { x: r, y: r };
-  const translationX = new Value(0);
-  const translationY = new Value(0);
-  const state = new Value(State.UNDETERMINED);
-  const x = withOffset(translationX, state);
-  const y = withOffset(translationY, state);
-  const onGestureEvent = event([
-    {
-      nativeEvent: {
-        translationX,
-        translationY,
-        state,
-      },
-    },
-  ]);
-  useCode(() => block([set(theta, canvas2Polar({ x, y }, center).theta)]), [
+  const { gestureHandler, translation, state } = usePanGestureHandler();
+  const x = withOffset(translation.x, state);
+  const y = withOffset(translation.y, state);
+  const polar = canvas2Polar({ x, y }, center);
+  useCode(() => [set(theta, normalizeTheta(polar.theta))], [
     center,
     theta,
     x,
     y,
   ]);
   const { x: translateX, y: translateY } = polar2Canvas(
-    { theta, radius: r },
+    { theta: polar.theta, radius: r },
     center
   );
   return (
-    <PanGestureHandler
-      onHandlerStateChange={onGestureEvent}
-      {...{ onGestureEvent }}
-    >
+    <PanGestureHandler {...gestureHandler}>
       <Animated.View
         style={{
           ...StyleSheet.absoluteFillObject,
