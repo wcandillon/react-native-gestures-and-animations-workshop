@@ -7,6 +7,7 @@ import { Routes, StyleGuide, cardAssets } from "./src/components";
 import LoadAssets from "./src/components/LoadAssets";
 import Examples, { assets as examplesAssets } from "./src/Examples";
 import Transitions from "./src/Transitions";
+import Animations from "./src/Animations";
 import Gestures from "./src/Gestures";
 import SVGAnimations from "./src/SVGAnimations";
 
@@ -44,6 +45,13 @@ const AppNavigator = () => (
       component={Transitions}
       options={{
         title: "Transitions",
+      }}
+    />
+    <Stack.Screen
+      name="Animations"
+      component={Animations}
+      options={{
+        title: "Animations",
       }}
     />
     <Stack.Screen
