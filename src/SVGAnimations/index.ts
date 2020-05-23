@@ -1,1 +1,1 @@
-export { default } from "./SVGAnimations";
+export { default } from "./SVGAnimationsFinal";
