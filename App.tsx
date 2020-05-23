@@ -3,7 +3,7 @@ import { StatusBar } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { enableScreens } from "react-native-screens";
 
-import { Routes, StyleGuide } from "./src/components";
+import { Routes, StyleGuide, cardAssets } from "./src/components";
 import LoadAssets from "./src/components/LoadAssets";
 import Examples, { assets as examplesAssets } from "./src/Examples";
 import Transitions from "./src/Transitions";
@@ -16,7 +16,7 @@ const fonts = {
   "SFProText-Regular": require("./assets/fonts/SF-Pro-Text-Regular.otf"),
 };
 
-const assets = [...examplesAssets];
+const assets = [...cardAssets, ...examplesAssets];
 
 const Stack = createStackNavigator<Routes>();
 
