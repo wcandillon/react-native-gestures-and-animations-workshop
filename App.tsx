@@ -8,6 +8,7 @@ import LoadAssets from "./src/components/LoadAssets";
 import Examples, { assets as examplesAssets } from "./src/Examples";
 import Transitions from "./src/Transitions";
 import Gestures from "./src/Gestures";
+import SVGAnimations from "./src/SVGAnimations";
 
 enableScreens();
 
@@ -48,6 +49,13 @@ const AppNavigator = () => (
     <Stack.Screen
       name="Gestures"
       component={Gestures}
+      options={{
+        title: "Gestures",
+      }}
+    />
+    <Stack.Screen
+      name="SVGAnimations"
+      component={SVGAnimations}
       options={{
         title: "Gestures",
       }}
