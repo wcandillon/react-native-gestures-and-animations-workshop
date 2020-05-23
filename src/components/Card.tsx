@@ -1,51 +1,50 @@
-import * as React from "react";
-import { Dimensions, Image, ImageStyle, StyleSheet } from "react-native";
-import Animated from "react-native-reanimated";
-import StyleGuide from "./StyleGuide";
+import React from "react";
+import { Dimensions, Image, StyleSheet } from "react-native";
 
-type CardId = number;
-
-export const assets: CardId[] = [
+const { width } = Dimensions.get("window");
+const ratio = 228 / 362;
+export const CARD_WIDTH = width * 0.8;
+export const CARD_HEIGHT = CARD_WIDTH * ratio;
+export const assets = [
   require("../../assets/cards/card1.png"),
   require("../../assets/cards/card2.png"),
   require("../../assets/cards/card3.png"),
+  require("../../assets/cards/card4.png"),
+  require("../../assets/cards/card5.png"),
+  require("../../assets/cards/card6.png"),
 ];
 
-const { width } = Dimensions.get("window");
-const CARD_ASPECT_RATIO = 1324 / 863;
-export const CARD_WIDTH = width - StyleGuide.spacing * 8;
-export const CARD_HEIGHT = CARD_WIDTH / CARD_ASPECT_RATIO;
-
 const styles = StyleSheet.create({
-  container: {
+  card: {
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
-    borderRadius: 18,
-  },
-  flexibleContainer: {
-    flex: 1,
-    maxWidth: "100%",
-    aspectRatio: CARD_ASPECT_RATIO,
-    margin: StyleGuide.spacing,
-    borderRadius: 18,
-    resizeMode: "contain",
   },
 });
 
-export interface CardProps {
-  card: CardId;
+export enum Cards {
+  Card1 = 0,
+  Card2 = 1,
+  Card3 = 2,
+  Card4 = 3,
+  Card5 = 4,
+  Card6 = 5,
 }
 
-interface FlexibleCardProps extends CardProps {
-  style?: Animated.AnimateStyle<ImageStyle>;
-}
+export const cards = [
+  Cards.Card1,
+  Cards.Card2,
+  Cards.Card3,
+  Cards.Card4,
+  Cards.Card5,
+  Cards.Card6,
+];
 
-export const FlexibleCard = ({ card, style }: FlexibleCardProps) => (
-  <Animated.Image style={[styles.flexibleContainer, style]} source={card} />
-);
+interface CardProps {
+  card: Cards;
+}
 
 const Card = ({ card }: CardProps) => {
-  return <Image style={styles.container} source={card} />;
+  return <Image style={styles.card} source={assets[card]} />;
 };
 
 export default Card;

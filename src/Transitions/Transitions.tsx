@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, { Easing } from "react-native-reanimated";
 import { mix, transformOrigin, useTimingTransition } from "react-native-redash";
 
-import { Button, Card, StyleGuide, cardAssets } from "../components";
+import { Button, Card, StyleGuide, cards } from "../components";
 
 const { multiply, interpolate } = Animated;
 const { width } = Dimensions.get("window");
@@ -30,7 +30,7 @@ const UseTransition = () => {
   });
   return (
     <View style={styles.container}>
-      {cardAssets.map((card, index) => {
+      {cards.slice(0, 3).map((card, index) => {
         const rotation = interpolate(index, {
           inputRange: [0, 1, 2],
           outputRange: [-1, 0, 1],
