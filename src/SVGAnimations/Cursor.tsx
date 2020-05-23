@@ -20,7 +20,7 @@ interface CursorProps {
   r: number;
   theta: Animated.Value<number>;
   strokeWidth: number;
-  backgroundColor: string;
+  backgroundColor: Animated.Node<number>;
 }
 
 const normalizeTheta = proc((theta: Animated.Node<number>) =>
