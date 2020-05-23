@@ -21,6 +21,8 @@ const CircularProgressSVG = ({
   strokeWidth,
 }: CircularProgressProps) => {
   const radius = r - strokeWidth / 2;
+  const strokeDashoffset = multiply(theta, radius);
+  const circumference = radius * 2 * PI;
   return (
     <Svg style={StyleSheet.absoluteFill}>
       <Circle
@@ -31,7 +33,15 @@ const CircularProgressSVG = ({
         r={radius}
         {...{ strokeWidth }}
       />
-      <Circle cx={r} cy={r} fill="transparent" stroke={color} r={radius} />
+      <AnimatedCircle
+        cx={r}
+        cy={r}
+        fill="transparent"
+        stroke={color}
+        r={radius}
+        strokeDasharray={`${circumference}, ${circumference}`}
+        {...{ strokeWidth, strokeDashoffset }}
+      />
     </Svg>
   );
 };

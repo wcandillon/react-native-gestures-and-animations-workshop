@@ -20,20 +20,29 @@ const styles = StyleSheet.create({
     padding: StyleGuide.spacing * 4,
   },
 });
+const newOrigin = -(width / 2 - StyleGuide.spacing * 2);
 
 const UseTransition = () => {
   const [toggled, setToggle] = useState(false);
+  const transitionVal = useTransition(toggled, {
+    duration: 400,
+    easing: Easing.inOut(Easing.ease),
+  });
   return (
     <View style={styles.container}>
       {cards.slice(0, 3).map((card, index) => {
-        const rotate = toggled ? ((index - 1) * Math.PI) / 6 : 0;
+        const rotation = interpolate(index, {
+          inputRange: [0, 1, 2],
+          outputRange: [-1, 0, 1],
+        });
+        const rotate = multiply(rotation, mix(transitionVal, 0, Math.PI / 6));
         return (
           <Animated.View
             key={card}
             style={[
               styles.overlay,
               {
-                transform: [{ rotate }],
+                transform: transformOrigin({ x: newOrigin, y: 0 }, { rotate }),
               },
             ]}
           >
