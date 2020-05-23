@@ -35,7 +35,7 @@ const AppNavigator = () => (
     }}
   >
     <Stack.Screen
-      name="The Heart of the Matter"
+      name="HeartOfTheMatter"
       component={HeartOfTheMatter}
       options={{
         title: "The Heart of the Matter",
