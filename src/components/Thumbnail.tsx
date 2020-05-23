@@ -41,7 +41,7 @@ const Thumbnail = ({ title, source, onPress }: ThumbnailProps) => {
       <View style={styles.container}>
         <Animated.Image style={styles.image} {...{ source }} />
         <View style={styles.content}>
-          <Text type="title2">{title}</Text>
+          <Text type="title3">{title}</Text>
         </View>
       </View>
     </RectButton>

@@ -10,6 +10,7 @@ import Transitions from "./src/Transitions";
 import Animations from "./src/Animations";
 import Gestures from "./src/Gestures";
 import SVGAnimations from "./src/SVGAnimations";
+import HeartOfTheMatter from "./src/HeartOfTheMatter";
 
 enableScreens();
 
@@ -33,6 +34,13 @@ const AppNavigator = () => (
       headerTintColor: "white",
     }}
   >
+    <Stack.Screen
+      name="The Heart of the Matter"
+      component={HeartOfTheMatter}
+      options={{
+        title: "The Heart of the Matter",
+      }}
+    />
     <Stack.Screen
       name="Examples"
       component={Examples}

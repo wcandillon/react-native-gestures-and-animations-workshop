@@ -7,6 +7,11 @@ import { Routes, StyleGuide, Thumbnail } from "../components";
 
 const examples = [
   {
+    screen: "HeartOfTheMatter",
+    title: "The Heart of the Matter",
+    source: require("../../assets/examples/heart-of-the-matter.png"),
+  },
+  {
     screen: "Transitions",
     title: "Transitions",
     source: require("../../assets/examples/transitions.png"),
