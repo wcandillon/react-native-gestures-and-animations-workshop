@@ -73,7 +73,7 @@ const AppNavigator = () => (
       name="SVGAnimations"
       component={SVGAnimations}
       options={{
-        title: "Gestures",
+        title: "SVG Animations",
       }}
     />
   </Stack.Navigator>
