@@ -5,21 +5,6 @@ import { useClock, useValue } from "react-native-redash";
 import ChatBubble from "./ChatBubble";
 import { Button, StyleGuide } from "../components";
 
-const {
-  Value,
-  useCode,
-  set,
-  block,
-  cond,
-  startClock,
-  stopClock,
-  clockRunning,
-  and,
-  not,
-  eq,
-  timing,
-} = Animated;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

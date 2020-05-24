@@ -1,1 +1,1 @@
-export { default } from "./AnimationsFinal";
+export { default } from "./Animations";
