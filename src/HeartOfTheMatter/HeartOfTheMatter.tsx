@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";

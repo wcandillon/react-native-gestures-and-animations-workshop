@@ -35,17 +35,17 @@ const AppNavigator = () => (
     }}
   >
     <Stack.Screen
-      name="HeartOfTheMatter"
-      component={HeartOfTheMatter}
-      options={{
-        title: "The Heart of the Matter",
-      }}
-    />
-    <Stack.Screen
       name="Examples"
       component={Examples}
       options={{
         title: "Gestures & Animations",
+      }}
+    />
+    <Stack.Screen
+      name="HeartOfTheMatter"
+      component={HeartOfTheMatter}
+      options={{
+        title: "The Heart of the Matter",
       }}
     />
     <Stack.Screen

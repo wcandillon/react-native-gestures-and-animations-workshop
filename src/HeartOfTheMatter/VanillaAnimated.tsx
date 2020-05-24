@@ -36,6 +36,9 @@ const HeartOfTheMatter = () => {
       position.flattenOffset();
     },
   });
+  useEffect(() =>
+    new Array(5000).fill(0).map(() => console.log("JS thread busy!"))
+  );
   return (
     <View style={styles.container}>
       <Animated.View
