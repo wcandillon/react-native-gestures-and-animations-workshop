@@ -1,7 +1,8 @@
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useSafeArea } from "react-native-safe-area-context";
 
 import { Routes, StyleGuide, Thumbnail } from "../components";
 
@@ -40,11 +41,12 @@ const styles = StyleSheet.create({
     backgroundColor: StyleGuide.palette.background,
   },
   content: {
-    paddingBottom: 32,
+    paddingVertical: StyleGuide.spacing,
   },
 });
 
 const Examples = () => {
+  const insets = useSafeArea();
   const { navigate } = useNavigation<StackNavigationProp<Routes, "Examples">>();
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -55,6 +57,7 @@ const Examples = () => {
           {...thumbnail}
         />
       ))}
+      <View style={{ height: insets.bottom }} />
     </ScrollView>
   );
 };

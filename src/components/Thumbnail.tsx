@@ -8,8 +8,8 @@ import Text from "./Text";
 
 const styles = StyleSheet.create({
   container: {
-    margin: StyleGuide.spacing * 2,
-    marginBottom: 0,
+    marginHorizontal: StyleGuide.spacing * 2,
+    marginVertical: StyleGuide.spacing,
     borderRadius: 8,
     flex: 1,
     height: 150,
