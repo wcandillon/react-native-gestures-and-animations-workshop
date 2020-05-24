@@ -1,23 +1,29 @@
 import React, { useState } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 
+import { PanGestureHandler } from "react-native-gesture-handler";
+import {
+  diffClamp,
+  translate,
+  usePanGestureHandler,
+  withDecay,
+  withOffset,
+} from "react-native-redash";
 import Animated, {
   Extrapolate,
   add,
   interpolate,
 } from "react-native-reanimated";
-
-import { PanGestureHandler } from "react-native-gesture-handler";
 import {
-  diffClamp,
-  usePanGestureHandler,
-  withDecay,
-} from "react-native-redash";
-import { CARD_HEIGHT, Card, cards } from "../components";
+  CARD_WIDTH,
+  Card,
+  CARD_HEIGHT as DEFAULT_CARD_HEIGHT,
+  cards,
+} from "../components";
 
 const { height } = Dimensions.get("window");
 const MARGIN = 16;
-const HEIGHT = CARD_HEIGHT + MARGIN * 2;
+const CARD_HEIGHT = DEFAULT_CARD_HEIGHT + MARGIN * 2;
 
 const styles = StyleSheet.create({
   container: {
@@ -31,75 +37,76 @@ const styles = StyleSheet.create({
 
 const Wallet = () => {
   const [containerHeight, setContainerHeight] = useState(height);
-  const visibleCards = Math.floor(containerHeight / HEIGHT);
   const {
     gestureHandler,
     translation,
     velocity,
     state,
   } = usePanGestureHandler();
+  const visibleCards = Math.floor(containerHeight / CARD_HEIGHT);
   const y = diffClamp(
     withDecay({
       value: translation.y,
       velocity: velocity.y,
       state,
     }),
-    -HEIGHT * cards.length + visibleCards * HEIGHT,
+    -cards.length * CARD_HEIGHT + visibleCards * CARD_HEIGHT,
     0
   );
   return (
-    <PanGestureHandler {...gestureHandler}>
-      <Animated.View
-        style={styles.container}
-        onLayout={({
-          nativeEvent: {
-            layout: { height: h },
-          },
-        }) => setContainerHeight(h)}
-      >
-        {cards.map((card, index) => {
-          const positionY = add(y, index * HEIGHT);
-          const isDisappearing = -HEIGHT;
-          const isTop = 0;
-          const isBottom = HEIGHT * (visibleCards - 1);
-          const isAppearing = HEIGHT * visibleCards;
-          const translateYWithScale = interpolate(positionY, {
-            inputRange: [isBottom, isAppearing],
-            outputRange: [0, -HEIGHT / 4],
-            extrapolate: Extrapolate.CLAMP,
-          });
-          const translateY = add(
-            interpolate(y, {
-              inputRange: [-HEIGHT * index, 0],
-              outputRange: [-HEIGHT * index, 0],
+    <View
+      style={styles.container}
+      onLayout={({
+        nativeEvent: {
+          layout: { height: h },
+        },
+      }) => setContainerHeight(h)}
+    >
+      <PanGestureHandler {...gestureHandler}>
+        <Animated.View>
+          {cards.map((card, index) => {
+            const positionY = add(y, index * CARD_HEIGHT);
+            const isDisappearing = -CARD_HEIGHT;
+            const isOnTop = 0;
+            const isOnBottom = (visibleCards - 1) * CARD_HEIGHT;
+            const isAppearing = visibleCards * CARD_HEIGHT;
+            const extraTranslationY = interpolate(positionY, {
+              inputRange: [isOnBottom, isAppearing],
+              outputRange: [0, -CARD_HEIGHT / 4],
               extrapolate: Extrapolate.CLAMP,
-            }),
-            translateYWithScale
-          );
-          const scale = interpolate(positionY, {
-            inputRange: [isDisappearing, isTop, isBottom, isAppearing],
-            outputRange: [0.5, 1, 1, 0.5],
-            extrapolate: Extrapolate.CLAMP,
-          });
-          const opacity = interpolate(positionY, {
-            inputRange: [isDisappearing, isTop, isBottom, isAppearing],
-            outputRange: [0, 1, 1, 0],
-            extrapolate: Extrapolate.CLAMP,
-          });
-          return (
-            <Animated.View
-              style={[
-                styles.card,
-                { opacity, transform: [{ translateY }, { scale }] },
-              ]}
-              key={index}
-            >
-              <Card {...{ card }} />
-            </Animated.View>
-          );
-        })}
-      </Animated.View>
-    </PanGestureHandler>
+            });
+            const translateY = add(
+              interpolate(y, {
+                inputRange: [-CARD_HEIGHT * index, 0],
+                outputRange: [-CARD_HEIGHT * index, 0],
+                extrapolate: Extrapolate.CLAMP,
+              }),
+              extraTranslationY
+            );
+            const scale = interpolate(positionY, {
+              inputRange: [isDisappearing, isOnTop, isOnBottom, isAppearing],
+              outputRange: [0.5, 1, 1, 0.5],
+              extrapolate: Extrapolate.CLAMP,
+            });
+            const opacity = interpolate(positionY, {
+              inputRange: [isDisappearing, isOnTop, isOnBottom, isAppearing],
+              outputRange: [0.5, 1, 1, 0.5],
+            });
+            return (
+              <Animated.View
+                key={index}
+                style={[
+                  styles.card,
+                  { opacity, transform: [{ translateY }, { scale }] },
+                ]}
+              >
+                <Card {...{ card }} />
+              </Animated.View>
+            );
+          })}
+        </Animated.View>
+      </PanGestureHandler>
+    </View>
   );
 };
 
