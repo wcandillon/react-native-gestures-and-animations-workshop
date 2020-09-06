@@ -33,4 +33,8 @@ export { default } from "./Transitions";
 
 Feel free to post issues to this repository if you have any questions.
 
+## Dig Deeper
+
+Checkout my online course at https://start-react-native.dev/
+
 ## Happy Hacking 🎉
